@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 export default function InputTable() {
-<<<<<<< HEAD
   const [input, setInput] = useState("");
   const [rows, setRows] = useState([]);
 
@@ -9,7 +8,6 @@ export default function InputTable() {
     const lines = input.trim().split("\n").map(line => line.split(","));
     setRows(lines);
     localStorage.setItem("userTable", JSON.stringify(lines));
-=======
   const [rows, setRows] = useState([]);
 
   const handleFileUpload = (e) => {
@@ -22,12 +20,10 @@ export default function InputTable() {
       localStorage.setItem("userTable", JSON.stringify(lines));
     };
     reader.readAsText(file);
->>>>>>> 9318985 (Premier commit)
   };
 
   return (
     <div className="max-w-3xl mx-auto p-6">
-<<<<<<< HEAD
       <h2 className="text-2xl font-bold mb-4">Saisir une Table</h2>
       <textarea
         rows={6}
@@ -39,7 +35,6 @@ export default function InputTable() {
       <button onClick={handleProcess} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
         Valider
       </button>
-=======
       <h2 className="text-2xl font-bold mb-4">Téléverser une table CSV</h2>
       <input
         type="file"
@@ -47,7 +42,6 @@ export default function InputTable() {
         onChange={handleFileUpload}
         className="mb-4 block"
       />
->>>>>>> 9318985 (Premier commit)
 
       {rows.length > 0 && (
         <table className="mt-6 w-full table-auto border-collapse">
