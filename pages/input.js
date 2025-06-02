@@ -1,17 +1,18 @@
 import { useState } from "react";
 
 export default function InputTable() {
-  const [input, setInput] = useState("");
   const [rows, setRows] = useState([]);
-
-  const handleProcess = () => {
-    const lines = input.trim().split("\n").map(line => line.split(","));
-    setRows(lines);
-    localStorage.setItem("userTable", JSON.stringify(lines));
-  const [rows, setRows] = useState([]);
+  const [filename, setFilename] = useState("");
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
+    if (!file || !file.name.endsWith(".csv")) {
+      alert("Veuillez téléverser un fichier CSV valide.");
+      return;
+    }
+
+    setFilename(file.name);
+
     const reader = new FileReader();
     reader.onload = (event) => {
       const text = event.target.result;
@@ -23,19 +24,8 @@ export default function InputTable() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Saisir une Table</h2>
-      <textarea
-        rows={6}
-        className="w-full border rounded p-2 mb-4"
-        onChange={(e) => setInput(e.target.value)}
-        value={input}
-        placeholder="Ex: ID,Nom,Matières\n1,Alice,Math-Physique"
-      />
-      <button onClick={handleProcess} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-        Valider
-      </button>
-      <h2 className="text-2xl font-bold mb-4">Téléverser une table CSV</h2>
+    <div className="max-w-4xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">📁 Téléverser une table CSV</h2>
       <input
         type="file"
         accept=".csv"
@@ -43,17 +33,29 @@ export default function InputTable() {
         className="mb-4 block"
       />
 
+      {filename && <p className="mb-4 text-sm text-gray-600">Fichier sélectionné : <strong>{filename}</strong></p>}
+
       {rows.length > 0 && (
-        <table className="mt-6 w-full table-auto border-collapse">
-          <thead>
-            <tr>{rows[0].map((col, i) => <th key={i} className="border p-2 bg-gray-100">{col}</th>)}</tr>
-          </thead>
-          <tbody>
-            {rows.slice(1).map((row, i) => (
-              <tr key={i}>{row.map((cell, j) => <td key={j} className="border p-2">{cell}</td>)}</tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse mt-4 text-sm">
+            <thead>
+              <tr>
+                {rows[0].map((col, i) => (
+                  <th key={i} className="border p-2 bg-gray-100">{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.slice(1).map((row, i) => (
+                <tr key={i}>
+                  {row.map((cell, j) => (
+                    <td key={j} className="border p-2">{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
