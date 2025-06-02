@@ -33,4 +33,30 @@ export function normalizeTo2NF(table) {
   const newRows = rows.map(row => [row[0], ...row.slice(2)]);
 
   return [newHeader, ...newRows];
+<<<<<<< HEAD
+=======
+}
+
+export function normalizeTo3NF(table) {
+  if (!table || table.length < 2) return table;
+  const [header, ...rows] = table;
+
+  if (header.length <= 2) return table;
+
+  const newHeader = [header[0], header[2]];
+  const newRows = rows.map(row => [row[0], row[2]]);
+
+  return [newHeader, ...newRows];
+}
+
+export function normalizeToBCNF(table) {
+  if (!table || table.length < 2) return table;
+  const [header, ...rows] = table;
+
+  // Remove all non-superkey dependencies (naive)
+  const bcnfHeader = [header[0]];
+  const bcnfRows = rows.map(row => [row[0]]);
+
+  return [bcnfHeader, ...bcnfRows];
+>>>>>>> 9318985 (Premier commit)
 }
