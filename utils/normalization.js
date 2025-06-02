@@ -6,7 +6,7 @@ export function normalizeTo1NF(table) {
 
   rows.forEach(row => {
     let explodedRows = [[]];
-    row.forEach((cell, colIndex) => {
+    row.forEach((cell) => {
       const values = cell.includes("-") ? cell.split("-") : [cell];
       const newRows = [];
       explodedRows.forEach(base => {
@@ -33,8 +33,6 @@ export function normalizeTo2NF(table) {
   const newRows = rows.map(row => [row[0], ...row.slice(2)]);
 
   return [newHeader, ...newRows];
-<<<<<<< HEAD
-=======
 }
 
 export function normalizeTo3NF(table) {
@@ -53,10 +51,8 @@ export function normalizeToBCNF(table) {
   if (!table || table.length < 2) return table;
   const [header, ...rows] = table;
 
-  // Remove all non-superkey dependencies (naive)
   const bcnfHeader = [header[0]];
   const bcnfRows = rows.map(row => [row[0]]);
 
   return [bcnfHeader, ...bcnfRows];
->>>>>>> 9318985 (Premier commit)
 }
